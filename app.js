@@ -25,20 +25,20 @@ io.sockets.on('connection', function(s) {
     //python.stdin.write('libsbml.' + input.method + '(' + input.params.join(', ') + ')' + '\n');
     console.log('Running command: ' + input.command);
     python.stdin.write('libsbml.' + input.command + '\n');
-    python.stdout.on('data', function(data) {
-      // convert buffer to string
-      var output = '' + data;
-      s.emit('response', {
-        output: output
-      });
-      console.log('python stdout: ' + output);
+  });
+  python.stdout.on('data', function(data) {
+    // convert buffer to string
+    var output = '' + data;
+    s.emit('response', {
+      output: output
     });
-    python.stderr.on('data', function(data) {
-      var output = '' + data;
-      s.emit('response', {
-        error: output
-      });
-      console.log('python stderr: ' + output);
+    console.log('python stdout: ' + output);
+  });
+  python.stderr.on('data', function(data) {
+    var output = '' + data;
+    s.emit('response', {
+      error: output
     });
+    console.log('python stderr: ' + output);
   });
 });
